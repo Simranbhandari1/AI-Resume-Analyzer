@@ -10,7 +10,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:5173',
-      'https://ai-based-resume-analyzer-topaz.vercel.app',
+      'https://ai-resume-analyzer-smoky-eight.vercel.app',
       'https://ai-based-resume-analyzer-pyxjuplv3-simrans-projects-654e77f7.vercel.app',
     ],
     credentials: true,
