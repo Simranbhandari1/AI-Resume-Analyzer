@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks/useAuth';
+import Loader from '../components/Loader';
 
 const Register = () => {
   const { loading, handleRegister } = useAuth();
@@ -26,7 +27,8 @@ const Register = () => {
   if (loading) {
     return (
       <main>
-        <h1>Loading.......</h1>
+        {/* <h1>Loading.......</h1> */}
+        <Loader />
       </main>
     );
   }

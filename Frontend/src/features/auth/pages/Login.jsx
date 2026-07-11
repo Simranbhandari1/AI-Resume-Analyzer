@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useNavigate, Link } from 'react-router';
 import '../auth.form.scss';
 import { useAuth } from '../hooks/useAuth';
+import Loader from '../components/Loader';
 
 const Login = () => {
   const { loading, handleLogin } = useAuth();
@@ -23,7 +24,8 @@ const Login = () => {
   if (loading) {
     return (
       <main>
-        <h1>Loading.......</h1>
+        {/* <h1>Loading.......</h1> */}
+        <Loader />
       </main>
     );
   }

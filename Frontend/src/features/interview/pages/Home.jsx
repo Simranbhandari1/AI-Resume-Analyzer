@@ -2,40 +2,77 @@ import React, { useState, useRef } from 'react';
 import '../style/home.scss';
 import { useInterview } from '../hooks/useInterview.js';
 import { useNavigate } from 'react-router';
-import Loader from '../../auth/components/Loader.jsx';
+import toast from 'react-hot-toast';
+import ReportSkeleton from '../../auth/components/ReportSkeleton';
+import HomeSkeleton from '../../auth/components/HomePageSkeleton.jsx';
 
 const Home = () => {
-  const { loading, generateReport, reports } = useInterview();
+  const { loading, generating, generateReport, reports } = useInterview();
   const [jobDescription, setJobDescription] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
+
   const resumeInputRef = useRef();
 
   const navigate = useNavigate();
+  const countWords = (text) => {
+    return text
+      .trim()
+      .split(/\s+/)
+      .filter((word) => word.length > 0).length;
+  };
 
   const handleGenerateReport = async () => {
     const resumeFile = resumeInputRef.current.files[0];
-    console.log('Generating report with:', {
-      jobDescription,
-      selfDescription,
-      resumeFile,
-    });
-    const data = await generateReport({
-      jobDescription,
-      selfDescription,
-      resumeFile,
-    });
-    navigate(`/interview/${data._id}`);
-  };
+    const jobDescriptionWords = countWords(jobDescription);
+    const selfDescriptionWords = countWords(selfDescription);
 
+    if (jobDescriptionWords < 50) {
+      toast.error('Job description must contain at least 50 words.');
+      return;
+    }
+
+    if (!resumeFile && selfDescriptionWords < 50) {
+      toast.error(
+        'Please upload a resume or write at least 50 words about yourself.',
+      );
+      return;
+    }
+
+    try {
+      const data = await generateReport({
+        jobDescription,
+        selfDescription,
+        resumeFile,
+      });
+
+      navigate(`/interview/${data._id}`);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setGenerating(false);
+    }
+  };
+  // Loading while fetching reports on page refresh
   if (loading) {
-    return (
-      <main className="loading-screen">
-        {/* <h1>Loading your interview plan...</h1> */}
-        <Loader />
-      </main>
-    );
+    return <HomeSkeleton />;
   }
+
+  // Loading after clicking Generate
+  if (generating) {
+    return <ReportSkeleton />;
+  }
+  // if (loading) {
+  //   return (
+  //     <main className="loading-screen">
+  //       {/* <h1>Loading your interview plan...</h1> */}
+  //       <Loader />
+  //     </main>
+  //   );
+  // }
+  // if (loading) {
+  //   return <ReportSkeleton />;
+  // }
 
   return (
     <div className="home-page">
