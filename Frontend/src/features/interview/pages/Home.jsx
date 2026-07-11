@@ -49,8 +49,6 @@ const Home = () => {
       navigate(`/interview/${data._id}`);
     } catch (err) {
       console.error(err);
-    } finally {
-      setGenerating(false);
     }
   };
   // Loading while fetching reports on page refresh
