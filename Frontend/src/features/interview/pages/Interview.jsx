@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../style/interview.scss';
 import { useInterview } from '../hooks/useInterview.js';
 import { useNavigate, useParams } from 'react-router';
+import Loader from '../../auth/components/Loader.jsx';
 
 const NAV_ITEMS = [
   {
@@ -63,7 +64,6 @@ const NAV_ITEMS = [
     ),
   },
 ];
-
 
 const QuestionCard = ({ item, index }) => {
   const [open, setOpen] = useState(false);
@@ -142,7 +142,8 @@ const Interview = () => {
   if (loading || !report) {
     return (
       <main className="loading-screen">
-        <h1>Loading your interview plan...</h1>
+        {/* <h1>Loading your interview plan...</h1> */}
+        <Loader />
       </main>
     );
   }

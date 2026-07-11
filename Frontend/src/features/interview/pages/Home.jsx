@@ -8,6 +8,7 @@ const Home = () => {
   const { loading, generateReport, reports } = useInterview();
   const [jobDescription, setJobDescription] = useState('');
   const [selfDescription, setSelfDescription] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
   const resumeInputRef = useRef();
 
   const navigate = useNavigate();
@@ -90,7 +91,7 @@ const Home = () => {
 
           {/* Right Panel - Profile */}
           <div className="panel panel--right">
-            <div className="panel__header">
+            {/* <div className="panel__header">
               <span className="panel__icon">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +109,7 @@ const Home = () => {
                 </svg>
               </span>
               <h2>Your Profile</h2>
-            </div>
+            </div> */}
 
             {/* Upload Resume */}
             <div className="upload-section">
@@ -145,8 +146,36 @@ const Home = () => {
                   id="resume"
                   name="resume"
                   accept=".pdf,.docx"
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    setSelectedFile(file);
+                  }}
                 />
               </label>
+              {selectedFile && (
+                <div className="selected-file">
+                  <div className="selected-file__left">
+                    <div className="selected-file__icon">📄</div>
+
+                    <div className="selected-file__details">
+                      <h4>{selectedFile.name}</h4>
+                      <span>
+                        {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                      </span>
+                    </div>
+                  </div>
+
+                  <button
+                    className="selected-file__remove"
+                    onClick={() => {
+                      setSelectedFile(null);
+                      resumeInputRef.current.value = '';
+                    }}
+                  >
+                    ✕
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* OR Divider */}
