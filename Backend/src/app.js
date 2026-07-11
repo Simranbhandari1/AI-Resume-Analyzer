@@ -11,6 +11,7 @@ app.use(
     origin: [
       'http://localhost:5173',
       'https://ai-resume-analyzer-smoky-eight.vercel.app',
+      'https://ai-resume-analyzer-7aw9co234-simrans-projects-654e77f7.vercel.app',
     ],
     credentials: true,
   }),
