@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router';
 import { useFormik } from 'formik';
 import { useAuth } from '../hooks/useAuth';
 import RegisterSkeleton from '../components/RegisterSkeleton';
+import { registerValidationSchema } from '../validationSchema/registerValidationSchema';
 const Register = () => {
   const { loading, handleRegister } = useAuth();
   const navigate = useNavigate();
@@ -13,6 +14,8 @@ const Register = () => {
       email: '',
       password: '',
     },
+
+    validationSchema: registerValidationSchema,
 
     onSubmit: async (values) => {
       console.log('Submitting registration:', values);
@@ -46,6 +49,7 @@ const Register = () => {
               placeholder="Enter username"
               value={formik.values.username}
               onChange={formik.handleChange}
+              required
             />
           </div>
 
@@ -58,6 +62,7 @@ const Register = () => {
               placeholder="Enter email address"
               value={formik.values.email}
               onChange={formik.handleChange}
+              required
             />
           </div>
 
@@ -70,6 +75,7 @@ const Register = () => {
               placeholder="Enter password"
               value={formik.values.password}
               onChange={formik.handleChange}
+              required
             />
           </div>
 

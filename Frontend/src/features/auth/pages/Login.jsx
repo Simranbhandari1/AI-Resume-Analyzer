@@ -3,6 +3,7 @@ import { useFormik } from 'formik';
 import { useNavigate, Link } from 'react-router';
 import '../auth.form.scss';
 import { useAuth } from '../hooks/useAuth';
+import { loginValidationSchema } from '../validationSchema/loginValidationSchema';
 
 import LoginSkeleton from '../components/LoginSkeleton';
 
@@ -15,7 +16,7 @@ const Login = () => {
       email: '',
       password: '',
     },
-
+    validationSchema: loginValidationSchema,
     onSubmit: async (values) => {
       await handleLogin(values);
       navigate('/');
@@ -45,6 +46,7 @@ const Login = () => {
               placeholder="Enter email address"
               value={formik.values.email}
               onChange={formik.handleChange}
+              required
             />
           </div>
 
@@ -57,6 +59,7 @@ const Login = () => {
               placeholder="Enter password"
               value={formik.values.password}
               onChange={formik.handleChange}
+              required
             />
           </div>
 
